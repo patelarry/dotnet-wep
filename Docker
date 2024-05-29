@@ -1,17 +1,29 @@
-FROM node:16.14.0 as build
 
+# Use the official Microsoft .NET SDK image to build the application
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+
+# Set the working directory inside the container
 WORKDIR /source
 
-# Copy the package lock file into the container
-COPY package*.json ./
-# Run ci only for the production dependencies
-RUN npm ci
+# Copy the .csproj file and restore any dependencies
+COPY *.csproj ./
+RUN dotnet restore
 
-# Copy the rest of the files into the container and build
+# Copy the rest of the application files and build the release version
 COPY . .
-RUN npm run build –prod
+RUN dotnet publish -c Release -o /app/publish
 
-FROM nginx:alpine
-COPY –from=build /source/dist/todo /usr/share/nginx/html
-COPY –from=build /source/nginx.conf /etc/nginx/conf.d/
-EXPOSE 8080
+# Use the official Microsoft .NET runtime image to run the application
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the published application from the build stage to the runtime stage
+COPY --from=build /app/publish .
+
+# Set the entry point for the application
+ENTRYPOINT ["dotnet", "YourApp.dll"]
+
+# Expose the necessary port (modify this as per your application settings)
+EXPOSE 80
