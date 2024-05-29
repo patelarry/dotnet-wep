@@ -1,17 +1,17 @@
+
 steps:
-  – name: gcr.io/cloud-builders/docker
+  - name: 'gcr.io/cloud-builders/docker'
     args:
-      – build
-      – '-t'
-      – 'us-central1-docker.pkg.dev/gcp-praticals/artifactnewrep
-      – .
-  – name: gcr.io/cloud-builders/docker
+      - build
+      - '-t'
+      - 'us-central1-docker.pkg.dev/gcp-praticals/artifactnewrep'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
     args:
-      – push
-      – 'us-central1-docker.pkg.dev/gcp-praticals/artifactnewrep
-  – name: gcr.io/google.com/cloudsdktool/cloud-sdk
-   
+      - push
+      - 'us-central1-docker.pkg.dev/gcp-praticals/artifactnewrep'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    
 timeout: 1200s
 images:
-  – 'us-central1-docker.pkg.dev/gcp-praticals/artifactnewreps
+  - 'us-central1-docker.pkg.dev/gcp-praticals/artifactnewrep'
