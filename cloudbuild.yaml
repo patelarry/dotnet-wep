@@ -11,7 +11,10 @@ steps:
       - push
       - 'us-central1-docker.pkg.dev/gcp-praticals/artifactnewrep'
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-   
+
 timeout: 1200s
 images:
   - 'us-central1-docker.pkg.dev/gcp-praticals/artifactnewrep'
+options:
+  logging: CLOUD_LOGGING_ONLY
+serviceAccount: 'my-custom-service-account@my-project.iam.gserviceaccount.com'
